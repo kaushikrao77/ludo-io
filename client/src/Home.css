@@ -1,0 +1,29 @@
+.Home > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 60%;
+  width: 60%;
+  margin: 20% 20%;
+  background-color: white;
+  outline: none;
+  border: none;
+}
+.Home > div > div {
+  height: 50%;
+  width: 50%;
+  margin: 25% 25%;
+  border-radius: 50%;
+}
+.blue {
+  background-color: blue;
+}
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+}
+.green {
+  background-color: green;
+}

@@ -1,0 +1,16 @@
+.Dice {
+  background-color: white;
+  margin: 50px 0 0 50px;
+}
+.Dice .number {
+  text-align: center;
+  font-size: 70px;
+  height: 100px;
+  width: 100px;
+  background-color: lightgrey;
+}
+.Dice .roll {
+  width: 100px;
+  height: 30px;
+  box-shadow: none;
+}
