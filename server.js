@@ -12,7 +12,7 @@ const {
   nextObject,
 } = require("./utility.js");
 
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
 const router = require("./router");
 
