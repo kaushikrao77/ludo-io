@@ -1,6 +1,7 @@
 const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
+const path = require("path");
 
 const {
   rooms,
@@ -18,6 +19,14 @@ const router = require("./router");
 
 const app = express();
 app.use(cors());
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 const server = app.listen(port, () =>
   console.log(`Server running on port ${port}`)
 );
