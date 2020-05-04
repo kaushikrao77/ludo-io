@@ -2,7 +2,9 @@ import { useState } from "react";
 export default (initialValue) => {
   const [value, setValue] = useState(initialValue);
   const random = () => {
-    setValue(Math.ceil(Math.random() * 6));
+    let rNum = Math.ceil(Math.random() * 6);
+    setValue(rNum);
+    return rNum;
   };
   return [value, random];
 };

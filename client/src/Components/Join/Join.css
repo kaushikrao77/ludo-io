@@ -9,8 +9,23 @@ body {
   height: 100vh;
 }
 
-* {
-  box-sizing: border-box;
+#l {
+  color: green;
+}
+#u {
+  color: #0459eb;
+}
+#d {
+  color: yellow;
+}
+#o {
+  color: red;
+}
+#dot {
+  color: yellow;
+}
+#i {
+  color: green;
 }
 
 .joinOuterContainer {
@@ -20,10 +35,11 @@ body {
   height: 100vh;
   align-items: center;
   background-color: #1a1a1d;
+  box-shadow: inset -10px 10px 30px -10px red, inset 10px -10px 30px -10px blue;
 }
 
 .joinInnerContainer {
-  width: 20%;
+  width: 350px;
 }
 
 .joinInput {
@@ -34,20 +50,20 @@ body {
 
 .heading {
   color: white;
-  font-size: 2.5em;
+  font-size: 3em;
   padding-bottom: 10px;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid red;
 }
 
 .button {
   color: #fff !important;
   text-transform: uppercase;
   text-decoration: none;
-  background: #2979ff;
+  background: rgba(255, 255, 255, 0.158);
   padding: 20px;
   border-radius: 5px;
+  border: 2px transparent solid;
   display: inline-block;
-  border: none;
   width: 100%;
 }
 
@@ -65,6 +81,9 @@ body {
   }
 }
 
-button:focus {
-  outline: 0;
+.button:hover {
+  border-top: 2px blue solid;
+  border-right: 2px blue solid;
+  border-left: 2px red solid;
+  border-bottom: 2px red solid;
 }

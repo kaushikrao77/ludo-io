@@ -8,9 +8,11 @@ const {
   nameToSocketId,
   addUser,
   removeUser,
-} = require("./users.js");
+  colors,
+  nextObject,
+} = require("./utility.js");
 
-const port = 5000;
+const port = process.env.port || 5000;
 
 const router = require("./router");
 
@@ -21,11 +23,11 @@ const server = app.listen(port, () =>
 );
 
 const io = socketio(server, { transports: ["websocket", "polling"] });
-io.set("origins", "http://localhost:3000");
 app.use(router);
 
-let colors = {};
-let nextObject = {};
+const getKeyByValue = (object, value) => {
+  return Object.keys(object).find((key) => object[key] === value);
+};
 
 io.on("connection", (socket) => {
   console.log("connected");
@@ -35,7 +37,6 @@ io.on("connection", (socket) => {
     if (host) {
       io.to(socket.id).emit("host", {});
     }
-    console.log(rooms);
     if (errObj && errObj.error) return cb(errObj.error);
     socket.join(roomId);
     io.in(roomId).emit("members", rooms[roomId]);
@@ -59,6 +60,8 @@ io.on("connection", (socket) => {
       if (i === 0) {
         io.to(tempSocketId).emit("turn", {});
       }
+      io.to(tempSocketId).emit("names", rooms[room]);
+      io.to(tempSocketId).emit("name", users[tempSocketId].name);
     }
     nextObject[room] = tempNextObject;
   });
@@ -69,15 +72,40 @@ io.on("connection", (socket) => {
   });
 
   socket.on("turn", () => {
-    console.log(nextObject);
-    io.to(nextObject[users[socket.id].roomId][socket.id]).emit("turn", {});
+    if (users[socket.id]) {
+      io.to(nextObject[users[socket.id].roomId][socket.id]).emit("turn", {});
+    }
+  });
+
+  socket.on("finish", () => {
+    let room = users[socket.id].roomId;
+    let key = getKeyByValue(nextObject[room], socket.id);
+    nextObject[room][key] = nextObject[room][socket.id];
+  });
+
+  socket.on("sendMessage", (message, callback) => {
+    const tempUser = users[socket.id];
+
+    io.in(tempUser.roomId).emit("message", {
+      user: tempUser.name,
+      text: message,
+    });
+
+    callback();
   });
 
   socket.on("disconnect", () => {
     if (users[socket.id]) {
       roomId = users[socket.id].roomId;
+      if (nextObject[roomId]) {
+        let key = getKeyByValue(nextObject[roomId], socket.id);
+        if (nextObject[roomId][key]) {
+          nextObject[roomId][key] = nextObject[roomId][socket.id];
+        }
+      }
       removeUser(socket.id);
-      io.to(roomId).emit("members", rooms[roomId]);
+      io.in(roomId).emit("members", rooms[roomId]);
+      io.in(roomId).emit("names", rooms[roomId]);
     }
     console.log(rooms);
     console.log("user has left!!");

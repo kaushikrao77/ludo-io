@@ -1,30 +1,37 @@
+.Game {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 20px 40px;
+  justify-content: center;
+}
 .Board {
-  height: 500px;
-  width: 500px;
+  height: 65vh;
+  width: 65vh;
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   position: relative;
 }
 .Board > div {
+  /* box-sizing: border-box; */
   border: grey solid 1px;
 }
 .Board .i0 {
-  background-color: rgb(188, 192, 255);
+  background-color: rgb(27, 29, 53);
   grid-column: 1/7;
   grid-row: 1/7;
 }
 .Board .i1 {
-  background-color: rgb(253, 190, 190);
+  background-color: rgb(87, 33, 33);
   grid-column: 10/16;
   grid-row: 1/7;
 }
 .Board .i2 {
-  background-color: rgb(255, 247, 173);
+  background-color: rgb(88, 83, 35);
   grid-column: 1/7;
   grid-row: 10/16;
 }
 .Board .i3 {
-  background-color: rgb(196, 255, 204);
+  background-color: rgb(27, 71, 33);
   grid-column: 10/16;
   grid-row: 10/16;
 }

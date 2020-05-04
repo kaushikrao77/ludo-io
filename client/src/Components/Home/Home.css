@@ -1,3 +1,7 @@
+.Home {
+  height: 26vh;
+  width: 26vh;
+}
 .Home > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -5,7 +9,7 @@
   height: 60%;
   width: 60%;
   margin: 20% 20%;
-  background-color: white;
+  background-color: #424242;
   outline: none;
   border: none;
 }

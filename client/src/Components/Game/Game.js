@@ -1,46 +1,60 @@
 import React, { useEffect } from "react";
-import Square from "./Square";
-import Home from "./Home";
-import End from "./End";
-import Dice from "./Dice";
-import useBoard from "./hooks/useBoard";
+import Square from "../Square/Square";
+import Home from "../Home/Home";
+import End from "../End/End";
+import Dice from "../Dice/Dice";
+import Names from "../Names/Names";
+import useBoard from "../../hooks/useBoard";
 import "./Game.css";
 
-function Game(props) {
-  const socket = props.socket;
-  const safe = [10, 11, 24, 32, 49, 57, 70, 71];
+function Game({
+  socket,
+  myColor,
+  toggleActive,
+  toggleMoveDone,
+  number,
+  isMoveDone,
+  isActive,
+  changeNumber,
+}) {
   const { board, next, setValue } = useBoard(null);
-  const freq = (arr, num) => {
+  const safe = [10, 11, 24, 32, 49, 57, 70, 71];
+
+  if (myColor === "blue") next[35] = 36;
+  else if (myColor === "red") next[6] = 9;
+  else if (myColor === "yellow") next[75] = 72;
+  else if (myColor === "green") next[46] = 45;
+
+  function freq(arr, num) {
     let cnt = 0;
     arr.forEach((ele) => {
       ele === num && cnt++;
     });
     return cnt;
-  };
+  }
 
-  if (props.myColor === "blue") next[35] = 36;
-  else if (props.myColor === "red") next[6] = 9;
-  else if (props.myColor === "yellow") next[75] = 72;
-  else if (props.myColor === "green") next[46] = 45;
-
+  //informs server that the move is done
   function tellSocketMoveDone() {
+    toggleActive(false);
+    toggleMoveDone(true);
     socket.emit("turn", {});
   }
 
+  //checks if there is a possible move
   function possibleMoveChecker(number) {
-    let pawns = board[props.myColor];
+    let pawns = board[myColor];
     let possible = 0;
     for (let pawn of pawns) {
-      if (!nextF(pawn, number)) possible++;
+      if (!nextSquareId(pawn, number)) possible++;
     }
     if (possible === 4) {
-      console.log("not possible");
-      props.toggleMoveDone(true);
+      toggleMoveDone(true);
       tellSocketMoveDone();
     }
   }
 
-  function nextF(n, count) {
+  //finds id of the next square
+  function nextSquareId(n, count) {
     if (count === 0) return n;
     if (n === 4) return false;
     if ([0, 1, 2, 3].includes(n)) {
@@ -50,9 +64,11 @@ function Game(props) {
       return false;
     }
     let tempn = next[n];
-    return nextF(tempn, --count);
+    return nextSquareId(tempn, --count);
   }
-  const hit = (color, newId) => {
+
+  //takes care of hitting a pawn logic
+  function hit(color, newId) {
     let match = {
       blue: 0,
       red: 1,
@@ -62,12 +78,14 @@ function Game(props) {
     let tempBoard = { ...board };
     tempBoard[color][board[color].indexOf(newId)] = match[color];
     return tempBoard;
-  };
-  const movePawn = (id) => {
+  }
+
+  //moves the pawn
+  function movePawn(id) {
     let isHit = false;
-    let newId = nextF(id, props.number);
+    let newId = nextSquareId(id, number);
     let tempBoard = { ...board };
-    if (props.isActive) {
+    if (isActive) {
       return;
     }
     if (!newId) {
@@ -76,24 +94,29 @@ function Game(props) {
     }
     if (!safe.includes(newId)) {
       for (let color of Object.keys(board)) {
-        if (color !== props.myColor && board[color].includes(newId)) {
+        if (color !== myColor && board[color].includes(newId)) {
           tempBoard = hit(color, newId);
           isHit = true;
         }
       }
     }
-    tempBoard[props.myColor][tempBoard[props.myColor].indexOf(id)] = newId;
+    tempBoard[myColor][tempBoard[myColor].indexOf(id)] = newId;
     setValue(tempBoard);
-    props.toggleMoveDone(true);
-    if (props.number === 6 || isHit || newId === 4) {
-      props.toggleActive(true);
-      props.toggleMoveDone(false);
+    toggleMoveDone(true);
+    if (number === 6 || isHit || newId === 4) {
+      toggleActive(true);
+      toggleMoveDone(false);
     } else {
       tellSocketMoveDone();
     }
+    if (JSON.stringify(board[myColor]) === JSON.stringify([4, 4, 4, 4])) {
+      tellSocketMoveDone();
+      socket.emit("finish", {});
+    }
     socket.emit("board", board);
-  };
+  }
 
+  //board formation
   const squares = Array.from({ length: 77 }).map((sq, idx) => {
     if (idx < 4)
       return (
@@ -105,9 +128,9 @@ function Game(props) {
           yellow={freq(board.yellow, idx)}
           green={freq(board.green, idx)}
           movePawn={movePawn}
-          isActive={props.isActive}
-          isMoveDone={props.isMoveDone}
-          myColor={props.myColor}
+          isActive={isActive}
+          isMoveDone={isMoveDone}
+          myColor={myColor}
         ></Home>
       );
     else if (idx === 4)
@@ -130,35 +153,41 @@ function Game(props) {
         yellow={freq(board.yellow, idx)}
         green={freq(board.green, idx)}
         movePawn={movePawn}
-        isMoveDone={props.isMoveDone}
-        isActive={props.isActive}
-        myColor={props.myColor}
+        isMoveDone={isMoveDone}
+        isActive={isActive}
+        myColor={myColor}
       ></Square>
     );
   });
 
   useEffect(() => {
+    //updates the board
     socket.on("board", (newBoard) => {
       setValue(newBoard);
     });
+
+    //allows the player to play his turn
     socket.on("turn", () => {
-      props.toggleActive(true);
-      props.toggleMoveDone(false);
+      toggleActive(true);
+      toggleMoveDone(false);
     });
   }, []);
 
   return (
-    <div>
+    <div className="Game">
       <div className="Board">{squares}</div>
-      <Dice
-        number={props.number}
-        changeNumber={props.changeNumber}
-        isActive={props.isActive}
-        toggleActive={props.toggleActive}
-        toggleMoveDone={props.toggleMoveDone}
-        isMoveDone={props.isMoveDone}
-        possibleMoveChecker={possibleMoveChecker}
-      />
+      <div>
+        <Dice
+          number={number}
+          changeNumber={changeNumber}
+          isActive={isActive}
+          toggleActive={toggleActive}
+          toggleMoveDone={toggleMoveDone}
+          isMoveDone={isMoveDone}
+          possibleMoveChecker={possibleMoveChecker}
+        />
+        <Names socket={socket} />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,87 @@
+.Dicee {
+  width: 70px;
+  height: 120px;
+  margin-left: 30px;
+  /* background-color: white; */
+}
+.Dicee .roll {
+  width: 70px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.158);
+  border: none;
+  box-shadow: none;
+  color: white;
+  border-radius: 4px;
+}
+.Dicee .roll:hover {
+  border-top: 2px solid rgb(71, 71, 255);
+  border-right: 2px solid rgb(71, 71, 255);
+  border-left: 2px solid red;
+  border-bottom: 2px solid red;
+}
+.Dicee .roll:focus {
+  outline: none;
+}
+
+.first-face {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dice {
+  padding: 4px;
+  background-color: rgb(110, 0, 0);
+  width: 70px;
+  height: 70px;
+  border-radius: 10%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.dot {
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.second-face {
+  display: flex;
+  justify-content: space-between;
+}
+
+.second-face .dot:nth-of-type(2) {
+  align-self: flex-end;
+}
+
+.third-face {
+  display: flex;
+  justify-content: space-between;
+}
+
+.third-face .dot:nth-of-type(1) {
+  align-self: flex-end;
+}
+
+.third-face .dot:nth-of-type(2) {
+  align-self: center;
+}
+
+.fourth-face,
+.sixth-face,
+.fifth-face {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fourth-face .column,
+.sixth-face .column,
+.fifth-face .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fifth-face .column:nth-of-type(2) {
+  justify-content: center;
+}

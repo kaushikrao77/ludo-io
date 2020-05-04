@@ -1,19 +1,21 @@
 import React from "react";
+import { v4 as uuid } from "uuid";
 import "./End.css";
 
 function End(props) {
   let blue = Array.from({ length: props.blue }).map(() => (
-    <div className="blue"></div>
+    <div key={uuid()} className="blue"></div>
   ));
   let red = Array.from({ length: props.red }).map(() => (
-    <div className="red"></div>
+    <div key={uuid()} className="red"></div>
   ));
   let yellow = Array.from({ length: props.yellow }).map(() => (
-    <div className="yellow"></div>
+    <div key={uuid()} className="yellow"></div>
   ));
   let green = Array.from({ length: props.green }).map(() => (
-    <div className="green"></div>
+    <div key={uuid()} className="green"></div>
   ));
+
   return (
     <div id="End" className={`End i${props.id}`}>
       <div className="up">{red}</div>

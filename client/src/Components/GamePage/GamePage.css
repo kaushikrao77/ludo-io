@@ -1,0 +1,16 @@
+.GamePage {
+  height: 100vh;
+  background-color: #1a1a1d;
+  box-shadow: inset -10px 10px 30px -10px red, inset 10px -10px 30px -10px blue;
+}
+.GamePage > div {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+}
+h1 {
+  text-align: center;
+  margin-block-start: 0px;
+  padding-top: 20px;
+  color: white;
+  font-size: 2.5rem;
+}

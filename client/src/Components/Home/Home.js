@@ -15,10 +15,12 @@ function Home(props) {
   let green = Array.from({ length: props.green }).map(() => (
     <div key={uuidv4()} className="green"></div>
   ));
-  const handleClick = () => {
+
+  function handleClick() {
     if (props[props.myColor] === 0 || props.isMoveDone) return;
     props.movePawn(props.id);
-  };
+  }
+
   return (
     <div className={`Home i${props.id}`} onClick={handleClick}>
       <div>

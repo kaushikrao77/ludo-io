@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import GamePage from "./GamePage";
-import Join from "./Join";
-import Room from "./Room";
+import React from "react";
+import GamePage from "../GamePage/GamePage";
+import Join from "../Join/Join";
+import Room from "../Room/Room";
 import { Route, Switch } from "react-router-dom";
 import io from "socket.io-client";
 

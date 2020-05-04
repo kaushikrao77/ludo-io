@@ -1,0 +1,40 @@
+#Square {
+  display: grid;
+  position: relative;
+  /* height: 4.5vh;
+  width: 4.5vh; */
+  box-sizing: unset;
+}
+.pawn {
+  border-radius: 50%;
+}
+.blue {
+  background-color: blue;
+}
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+}
+.green {
+  background-color: green;
+}
+.crossed {
+  background: linear-gradient(
+      to top left,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) calc(50% - 0.8px),
+      rgb(255, 255, 255) 50%,
+      rgba(255, 255, 255, 0) calc(50% + 0.8px),
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(
+      to top right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) calc(50% - 0.8px),
+      rgb(255, 255, 255) 50%,
+      rgba(255, 255, 255, 0) calc(50% + 0.8px),
+      rgba(255, 255, 255, 0) 100%
+    );
+}

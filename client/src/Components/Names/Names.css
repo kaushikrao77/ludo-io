@@ -1,0 +1,20 @@
+.Names {
+  margin-top: 20px;
+  margin-left: 30px;
+  padding: 10px;
+}
+.Names > div {
+  font-size: 1.5rem;
+}
+.Names :nth-child(1) {
+  color: rgb(70, 70, 255);
+}
+.Names :nth-child(2) {
+  color: red;
+}
+.Names :nth-child(3) {
+  color: green;
+}
+.Names :nth-child(4) {
+  color: yellow;
+}

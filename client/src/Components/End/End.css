@@ -1,9 +1,11 @@
 #End {
   position: relative;
-  border-top: rgb(253, 190, 190) solid 53px;
-  border-right: rgb(196, 255, 204) solid 53px;
-  border-bottom: rgb(255, 247, 173) solid 53px;
-  border-left: rgb(188, 192, 255) solid 53px;
+  height: 13vh;
+  width: 13vh;
+  border-top: rgb(87, 33, 33) solid 6.5vh;
+  border-right: rgb(27, 71, 33) solid 6.5vh;
+  border-bottom: rgb(88, 83, 35) solid 6.5vh;
+  border-left: rgb(27, 29, 53) solid 6.5vh;
 }
 .End > div {
   display: grid;
@@ -47,7 +49,4 @@
   box-sizing: border-box;
   right: 10px;
   bottom: -20px;
-}
-.blue {
-  background-color: blue;
 }

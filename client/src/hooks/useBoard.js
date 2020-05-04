@@ -1,10 +1,10 @@
 import { useState } from "react";
 export default () => {
   let initialVal = {
-    blue: [29, 19, 22, 0],
-    red: [5, 1, 1, 1],
-    yellow: [6, 2, 2, 2],
-    green: [7, 3, 3, 3],
+    blue: [0, 0, 0, 0],
+    red: [1, 1, 1, 1],
+    yellow: [2, 2, 2, 2],
+    green: [3, 3, 3, 3],
   };
 
   const next = [
