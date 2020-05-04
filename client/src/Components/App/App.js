@@ -6,7 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import io from "socket.io-client";
 
 function App() {
-  const ENDPOINT = "http://localhost:5000";
+  const ENDPOINT = "https://ludo-io.herokuapp.com";
   let socket = io(ENDPOINT, { transports: ["websocket", "polling"] });
   return (
     <Switch>

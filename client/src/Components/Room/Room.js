@@ -41,7 +41,7 @@ function Room({ socket, history }) {
           )}
         </div>
       </div>
-      <div className="href">{`localhost:3000#${
+      <div className="href">{`https://ludo-io.herokuapp.com/#${
         window.location.href.split("/")[3]
       }`}</div>
     </div>
